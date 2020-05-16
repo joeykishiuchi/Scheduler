@@ -6,7 +6,7 @@ import Button from "../Button"
 export default function Form(props) {
 
   const [ name, setName ] = useState(props.student || "")
-  const [ interviewer, setInterviewer ] = useState(props.value || null)
+  const [ interviewer, setInterviewer ] = useState(props.interviewer || null)
 
   function reset() {
     setInterviewer("")
@@ -40,7 +40,7 @@ export default function Form(props) {
         <section className="appointment__actions">
           <Button 
             danger
-            onClick={ cancel }
+            onClick={ () => cancel() }
           >Cancel</Button>
           <Button 
             confirm
