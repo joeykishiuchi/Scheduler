@@ -1,5 +1,6 @@
 import React from "react"
 import DayListItem from "./DayListItem"
+// Creates navbar for days of the week
 export default function DayList(props) {
 
   const day =  props.days.map(day => {
@@ -11,9 +12,10 @@ export default function DayList(props) {
         setDay= { props.setDay } 
       />
   });
+  // Render array of days in the navbar
   return (
     <ul>
-      { day }
+      { day } 
     </ul>
   );
 }
