@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 
 import Header from "./Header"
 import Show from "./Show"
@@ -29,6 +29,15 @@ export default function Appointment(props) {
    props.interview ? SHOW : EMPTY
  )
 
+ useEffect(() => {
+  if (props.interview === null && mode === "SHOW") {
+    transition(EMPTY);
+  }
+  if (props.interview && mode === "EMPTY") {
+    transition(SHOW);
+  }
+ }, [ props.interview, mode, transition ]);
+
  function save(name, interviewer) {
   const interview = {
     student: name,
@@ -46,8 +55,6 @@ function deleteInt() {
   .then(() => transition(EMPTY))
   .catch(() => transition(ERROR_DELETE, true));
 }
-
-console.log(mode)
 
   return (
      <article className="appointment">
