@@ -7,9 +7,11 @@
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "normalize.css": "^8.0.1",
+    "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-scripts": "^3.4.1"
+    "react-scripts": "^3.4.1",
+    "save-dev": "0.0.1-security"
   },
   "scripts": {
     "start": "react-scripts start",
