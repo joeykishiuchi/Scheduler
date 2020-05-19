@@ -1,5 +1,6 @@
 import { useReducer, useEffect } from "react";
 import axios from "axios"
+const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL)
 
 const SET_DAY = "SET_DAY";
   const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
@@ -54,20 +55,43 @@ export default function useApplicationData() {
     })
   }, []);
 
+  useEffect(() => {
+    webSocket.onopen = () => {
+      console.log("Connected to socket server")
+    };
+    webSocket.onmessage = event => {
+      const { type, id, interview } = JSON.parse(event.data)
+      // Set appointment value according to event
+      const appointment = {
+        ...state.appointments[id],
+        interview: interview 
+      }
+      const appointments = {
+        ...state.appointments,
+        [id]: appointment
+      };
+
+      // Calculate the number of spots remaining
+      const days = state.days;
+      const dayIndex = days.map(day => day.name).indexOf(state.day);
+      let interviewCount = 0;
+      for(const appointment of days[dayIndex].appointments) {
+        if (appointments[appointment].interview) {
+          interviewCount++;
+        }
+      }
+      days[dayIndex].spots = 5 - interviewCount;
+
+      dispatch({ type, days, appointments })
+    };
+  });
+
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
     };
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
     return axios.put(`/api/appointments/${appointment.id}`, appointment )
-      .then(() => {
-        return axios.get("/api/days")
-        .then(days => dispatch({ type:SET_INTERVIEW, appointments, days: days.data}))
-      })
   }
 
   function deleteInterview(id) {
@@ -75,17 +99,8 @@ export default function useApplicationData() {
       ...state.appointments[id],
       interview: null
     };
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-    return axios.delete(`/api/appointments/${appointment.id}`,  { interview: null } )
-      .then(() => {
-        axios.get("/api/days")
-        .then(days => dispatch({type:SET_INTERVIEW, appointments, days: days.data}));
-      })
+    return axios.delete(`/api/appointments/${appointment.id}`, appointment )
   }
-
 
 
   return {state, setDay, bookInterview, deleteInterview}
