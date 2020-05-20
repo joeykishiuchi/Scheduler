@@ -1,13 +1,13 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 
-import InterviewerList from "../InterviewerList"
-import Button from "../Button"
+import InterviewerList from "../InterviewerList";
+import Button from "../Button";
 
 export default function Form(props) {
   // State of users name input
-  const [ name, setName ] = useState(props.student || "")
+  const [ name, setName ] = useState(props.student || "");
   // State of users interviewer choice
-  const [ interviewer, setInterviewer ] = useState(props.interviewer || null)
+  const [ interviewer, setInterviewer ] = useState(props.interviewer || null);
   // state of input error message
   const [ err, setErr ] = useState("");
 
@@ -15,25 +15,25 @@ export default function Form(props) {
     setInterviewer("")
     setName("")
     setErr("")
-  }
+  };
   // Removes all existing states if user cancels form
   function cancel() {
     setErr("")
     reset()
     props.onCancel()
-  }
+  };
   // Validate users form to negate submission with missing fields
   function validate() {
     if (name === "") {
-      setErr("Please enter your name.")
-      return
+      setErr("Please enter your name.");
+      return;
     } else if (interviewer === null) {
-      setErr("Please choose an interviewer.")
+      setErr("Please choose an interviewer.");
       return;
     }
     setErr("");
-    props.onSave(name, interviewer)
-  }
+    props.onSave(name, interviewer);
+  };
   
   return (
     <main className="appointment__card appointment__card--create">
@@ -71,4 +71,4 @@ export default function Form(props) {
       </section>
     </main>
   );
-}
+};

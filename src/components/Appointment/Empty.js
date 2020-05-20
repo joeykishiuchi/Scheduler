@@ -1,6 +1,7 @@
-import React from "react"
+import React from "react";
 
 export default function Empty(props) {
+  // Display mode for a slot with no booked appointment
   return (
     <main className="appointment__add">
     <img
@@ -11,4 +12,4 @@ export default function Empty(props) {
     />
   </main>
   )
-}
+};

@@ -1,4 +1,5 @@
 export function getAppointmentsForDay(state, day) {
+  // Returns array of day objects dependent on specified day of the week
   const appointmentsForDay = [];
   let dayAppointments;
   if (state.days && state.appointments) {
@@ -10,9 +11,10 @@ export function getAppointmentsForDay(state, day) {
     }
   }
   return appointmentsForDay;
-}
+};
 
 export function getInterviewersForDay(state, day) {
+  // Returns available interviews dependent on specified day of the week
   const interviewersForDay = [];
   let dayInterviewers;
   if (state.days && state.interviewers) {
@@ -30,8 +32,8 @@ export function getInterviewersForDay(state, day) {
 
 export function getInterview(state, interview) {
   if (interview) {
-    return {student: interview.student, interviewer: state.interviewers[interview.interviewer]}
+    return {student: interview.student, interviewer: state.interviewers[interview.interviewer]};
   } else {
     return interview;
   }
-}
+};

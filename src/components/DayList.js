@@ -1,5 +1,5 @@
-import React from "react"
-import DayListItem from "./DayListItem"
+import React from "react";
+import DayListItem from "./DayListItem";
 // Creates navbar for days of the week
 export default function DayList(props) {
 
@@ -18,4 +18,4 @@ export default function DayList(props) {
       { day } 
     </ul>
   );
-}
+};

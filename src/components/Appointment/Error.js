@@ -1,6 +1,7 @@
-import React from "react"
+import React from "react";
 
 export default function Error(props) {
+  // Displays error message when unable to interact with the server API on booking or cancellation
   return (
     <main className="appointment__card appointment__card--error">
       <section className="appointment__error-message">
@@ -15,4 +16,4 @@ export default function Error(props) {
       />
     </main>
   );
-}
+};

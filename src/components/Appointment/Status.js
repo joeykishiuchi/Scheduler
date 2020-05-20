@@ -1,6 +1,7 @@
-import React from "react"
+import React from "react";
 
 export default function Status(props) {
+  // Loading message for saving or deleting
   return (
     <main className="appointment__card appointment__card--status">
       <img
@@ -11,4 +12,4 @@ export default function Status(props) {
       <h1 className="text--semi-bold">{ props.message }</h1>
     </main>
   );
-}
+};

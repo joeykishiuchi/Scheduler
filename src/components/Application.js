@@ -1,10 +1,10 @@
 import React from "react";
-import useApplicationData from "../hooks/useApplicationData"
+import useApplicationData from "../hooks/useApplicationData";
 
 import "components/Application.scss";
 
-import DayList from "./DayList.js"
-import Appointment from "components/Appointment/Index"
+import DayList from "./DayList.js";
+import Appointment from "components/Appointment/Index";
 
 import { getAppointmentsForDay, getInterviewersForDay, getInterview } from "../helpers/selectors";
 
@@ -18,7 +18,7 @@ export default function Application() {
   } = useApplicationData();
 
   const interviewers = getInterviewersForDay(state, state.day);
-
+  // Formats each appointment in a given day of the week
   const appointments = getAppointmentsForDay(state, state.day).map(appointment => {
       return (
           <Appointment 
@@ -31,11 +31,12 @@ export default function Application() {
             deleteInterview={ deleteInterview }
              />
       );
-  })
+  });
 
   return (
     <main className="layout">
       <section className="sidebar">
+        {/* Site Logo */}
         <img
           className="sidebar--centered"
           src="images/logo.png"
@@ -57,8 +58,8 @@ export default function Application() {
       </section>
       <section className="schedule">
         { appointments }
-        <Appointment key="last" time="5pm" />
+        <Appointment key="last" time="5pm" /> {/* Last hour of each day is unavailable and doesn't contain a form */}
       </section>
     </main>
   );
-}
+};

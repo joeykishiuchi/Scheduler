@@ -7,9 +7,10 @@ import './InterviewerList.scss';
 export default function InterviewerList(props) {
   // Type checking for props
   InterviewerList.propTypes = {
-    value: PropTypes.string,
+    // null may be casted as a string
+    value: PropTypes.number,
     onChange: PropTypes.func.isRequired
-  }
+  };
   // Items retrieved from database
   const interviewers = props.interviewers.map(interviewer => {
     return (
@@ -19,8 +20,8 @@ export default function InterviewerList(props) {
         avatar={ interviewer.avatar }
         selected={ interviewer.id === props.value ? true : null } 
         setInterviewer={ () => props.onChange(interviewer.id) }
-      />)
-  })
+      />);
+  });
   // Renders a list of interviewers in the appointments 
   return (
     <section className="interviewers">
@@ -29,5 +30,5 @@ export default function InterviewerList(props) {
         { interviewers }
       </ul>
     </section>
-  )
-}
+  );
+};
