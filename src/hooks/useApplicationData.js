@@ -54,6 +54,7 @@ export default function useApplicationData() {
       dispatch({type:SET_APPLICATION_DATA, days: all[0].data, appointments: all[1].data, interviewers: all[2].data});
     })
   }, []);
+  
 
   useEffect(() => {
     webSocket.onopen = () => {
@@ -72,8 +73,10 @@ export default function useApplicationData() {
       };
 
       // Calculate the number of spots remaining
+      const { name } = state.days.find(day => day.appointments.includes(id))
+
       const days = state.days;
-      const dayIndex = days.map(day => day.name).indexOf(state.day);
+      const dayIndex = days.map(day => day.name).indexOf(name);
       let interviewCount = 0;
       for(const appointment of days[dayIndex].appointments) {
         if (appointments[appointment].interview) {
