@@ -83,7 +83,7 @@ export default function useApplicationData() {
           interviewCount++;
         }
       }
-      days[dayIndex].spots = 5 - interviewCount;
+      days[dayIndex].spots = days.length - interviewCount;
 
       dispatch({ type, days, appointments })
     };
@@ -94,7 +94,25 @@ export default function useApplicationData() {
       ...state.appointments[id],
       interview: { ...interview }
     };
-    return axios.put(`/api/appointments/${appointment.id}`, appointment )
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    // Calculate the number of spots remaining
+    const { name } = state.days.find(day => day.appointments.includes(id))
+
+    const days = state.days;
+    const dayIndex = days.map(day => day.name).indexOf(name);
+    let interviewCount = 0;
+    for(const appointment of days[dayIndex].appointments) {
+      if (appointments[appointment].interview) {
+        interviewCount++;
+      }
+    }
+    days[dayIndex].spots = days.length - interviewCount;
+    return axios.put(`/api/appointments/${appointment.id}`, appointment)
+      .then(() => dispatch({type:SET_INTERVIEW, days, appointments}))
   }
 
   function deleteInterview(id) {
@@ -102,7 +120,25 @@ export default function useApplicationData() {
       ...state.appointments[id],
       interview: null
     };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    // Calculate the number of spots remaining
+    const { name } = state.days.find(day => day.appointments.includes(id))
+
+    const days = state.days;
+    const dayIndex = days.map(day => day.name).indexOf(name);
+    let interviewCount = 0;
+    for(const appointment of days[dayIndex].appointments) {
+      if (appointments[appointment].interview) {
+        interviewCount++;
+      }
+    }
+    days[dayIndex].spots = days.length - interviewCount;
     return axios.delete(`/api/appointments/${appointment.id}`, appointment )
+      .then(() => dispatch({type:SET_INTERVIEW, days, appointments}))
   }
 
 
