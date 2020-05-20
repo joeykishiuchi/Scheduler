@@ -4,9 +4,11 @@ import InterviewerList from "../InterviewerList"
 import Button from "../Button"
 
 export default function Form(props) {
-
+  // State of users name input
   const [ name, setName ] = useState(props.student || "")
+  // State of users interviewer choice
   const [ interviewer, setInterviewer ] = useState(props.interviewer || null)
+  // state of input error message
   const [ err, setErr ] = useState("");
 
   function reset() {
@@ -14,17 +16,20 @@ export default function Form(props) {
     setName("")
     setErr("")
   }
-
+  // Removes all existing states if user cancels form
   function cancel() {
     setErr("")
     reset()
     props.onCancel()
   }
-
+  // Validate users form to negate submission with missing fields
   function validate() {
     if (name === "") {
-      setErr("Student name cannot be blank")
+      setErr("Please enter your name.")
       return
+    } else if (interviewer === null) {
+      setErr("Please choose an interviewer.")
+      return;
     }
     setErr("");
     props.onSave(name, interviewer)
@@ -37,6 +42,7 @@ export default function Form(props) {
           autoComplete="off"
           onSubmit={ event => event.preventDefault() }
         >
+          {/* Value and onChange are type restricted to number and func */}
           <input
             data-testid="student-name-input"
             className="appointment__create-input text--semi-bold"
@@ -47,7 +53,8 @@ export default function Form(props) {
             onChange={ event => setName(event.target.value) }
           />
         </form>
-        <section className="appointment__validation">{ err }</section>
+        <section className="appointment__validation">{ err }</section> {/* Toggles error message */}
+        {/* Displays list of available interviewers for user to choose */}
         <InterviewerList interviewers={ props.interviewers } value={ interviewer } onChange={ setInterviewer } />
       </section>
       <section className="appointment__card-right">
