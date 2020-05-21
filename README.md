@@ -2,6 +2,8 @@
 
 A single-page scheduling application built with React, where students can set up interviews with available interviewers thoughout the week. Implemented Web Sockets for multiple users to interact with the site without refreshing the page!
 
+The website is also deployed on netlify, so please visit the site at ["https://joeys-interview-scheduler.netlify.app/"](https://joeys-interview-scheduler.netlify.app/)!
+
 ## Dependencies
    - axios
    - classnames
