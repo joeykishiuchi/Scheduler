@@ -35,6 +35,15 @@ deploy:
           git push https://github.com/joeykishiuchi/Scheduler.git master:production
 workflows:
   version: 2
-  test:
+  test_and_deploy:
     jobs:
       - build
+          filters:
+                branches:
+                  ignore: production
+          - deploy:
+              filters:
+                branches:
+                  ignore: production
+              requires:
+                - build
