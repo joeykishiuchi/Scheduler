@@ -33,7 +33,7 @@ deploy:
     - run:
         name: Push Master to Production
         command: |
-          git push https://github.com/joeykishiuchi/Scheduler master:production
+          git push https://github.com/joeykishiuchi/Scheduler.git master:production
 
 workflows:
   version: 2
@@ -41,11 +41,11 @@ workflows:
     jobs:
       - build
           filters:
-                branches:
-                  ignore: production
-          - deploy:
-              filters:
-                branches:
-                  ignore: production
-              requires:
-                - build
+            branches:
+              ignore: production
+      - deploy:
+          filters:
+            branches:
+              ignore: production
+          requires:
+            - build
